@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- github.com/kubeflow/manifests/common/istio-1-9-0/istio-namespace/base
+- github.com/kubeflow/manifests/common/istio-1-9-0/istio-crds/base
+- github.com/kubeflow/manifests/common/istio-1-9-0/istio-install/base
+- github.com/kubeflow/manifests/common/istio-1-9-0/cluster-local-gateway/base
+
+images:
+- name: docker.io/istio/proxyv2
+  newName: docker.io/istio/proxyv2
+  newTag: 1.9.1
+- name: docker.io/istio/pilot
+  newName: docker.io/istio/pilot
+  newTag: 1.9.1
