@@ -43,5 +43,6 @@
   "separateMinorPatch": true,
   "kustomize": {
     "enabled": true,
+    "dependencyDashboardApproval": false,
   }
 }
