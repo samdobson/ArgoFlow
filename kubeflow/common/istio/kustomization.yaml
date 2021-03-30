@@ -6,6 +6,7 @@ resources:
 - github.com/kubeflow/manifests/common/istio-1-9-0/istio-crds/base
 - github.com/kubeflow/manifests/common/istio-1-9-0/istio-install/base
 - github.com/kubeflow/manifests/common/istio-1-9-0/cluster-local-gateway/base
+- github.com/kubeflow/manifests/common/istio/oidc-authservice/base
 - github.com/kubeflow/manifests/common/istio/istio/base
 # for HTTPS, create a certificate with name `istio-ingressgateway-certs`
 # in the `istio-system` namespace, comment out the previous line and
@@ -22,3 +23,6 @@ images:
 - name: docker.io/istio/pilot
   newName: docker.io/istio/pilot
   newTag: 1.9.1
+- name: gcr.io/arrikto/kubeflow/oidc-authservice
+  newName: gcr.io/arrikto/kubeflow/oidc-authservice
+  newTag: 28c59ef
