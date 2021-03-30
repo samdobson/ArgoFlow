@@ -3,7 +3,7 @@ kind: Kustomization
 
 resources:
 - https://github.com/jetstack/cert-manager/releases/download/v1.2.0/cert-manager.yaml
-- kubeflow-self-signing-issuer.yaml
+- kubeflow-self-signed-issuer.yaml
 
 images:
 - name: quay.io/dexidp/dex
