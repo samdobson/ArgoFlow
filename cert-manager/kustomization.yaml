@@ -4,8 +4,19 @@ kind: Kustomization
 resources:
 - https://github.com/jetstack/cert-manager/releases/download/v1.2.0/cert-manager.yaml
 - kubeflow-self-signed-issuer.yaml
+# If you would like to setup a letsencrypt cluster issuer,
+# edit the `letsencrypt-cluster-issuer.yaml` with your details
+# see: https://cert-manager.io/docs/configuration/acme/#configuration
+# and uncomment the following line
+# - letsencrypt-cluster-issuer.yaml
 
 images:
-- name: quay.io/dexidp/dex
-  newName: ghcr.io/dexidp/dex
-  newTag: v2.28.1
+- name: quay.io/jetstack/cert-manager-controller
+  newName: quay.io/jetstack/cert-manager-controller
+  newTag: v1.2.0
+- name: quay.io/jetstack/cert-manager-cainjector
+  newName: quay.io/jetstack/cert-manager-cainjector
+  newTag: v1.2.0
+- name: quay.io/jetstack/cert-manager-webhook
+  newName: quay.io/jetstack/cert-manager-webhook
+  newTag: v1.2.0
