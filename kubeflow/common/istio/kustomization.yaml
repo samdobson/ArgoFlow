@@ -7,6 +7,9 @@ resources:
 - github.com/kubeflow/manifests/common/istio-1-9-0/istio-install/base
 - github.com/kubeflow/manifests/common/istio-1-9-0/cluster-local-gateway/base
 
+patchesStrategicMerge:
+- gateway-service.yaml
+
 images:
 - name: docker.io/istio/proxyv2
   newName: docker.io/istio/proxyv2
