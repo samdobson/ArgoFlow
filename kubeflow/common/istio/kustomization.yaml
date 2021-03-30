@@ -6,6 +6,7 @@ resources:
 - github.com/kubeflow/manifests/common/istio-1-9-0/istio-crds/base
 - github.com/kubeflow/manifests/common/istio-1-9-0/istio-install/base
 - github.com/kubeflow/manifests/common/istio-1-9-0/cluster-local-gateway/base
+- github.com/kubeflow/manifests/common/istio/istio/base
 
 patchesStrategicMerge:
 - gateway-service.yaml
