@@ -16,7 +16,7 @@ images:
   newTag: 1.5.0-rc.0
 - name: gcr.io/tfx-oss-public/ml_metadata_store_server
   newName: gcr.io/tfx-oss-public/ml_metadata_store_server
-  newTag: "0.25.1"
+  newTag: "0.29.0"
 - name: gcr.io/ml-pipeline/metadata-writer
   newName: gcr.io/ml-pipeline/metadata-writer
   newTag: 1.5.0-rc.0
