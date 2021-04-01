@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/kubeflow-onprem/ArgoFlow
     targetRevision: HEAD
-    path: /
+    path: .
   destination:
     server: https://kubernetes.default.svc
   syncPolicy:
