@@ -7,5 +7,5 @@ resources:
 
 images:
 - name: quay.io/dexidp/dex
-  newName: ghcr.io/dexidp/dex
-  newTag: v2.28.1
+  newName: quay.io/dexidp/dex
+  newTag: v2.22.0
