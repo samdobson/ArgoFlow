@@ -4,3 +4,6 @@ kind: Kustomization
 resources:
 - github.com/kubeflow/manifests/common/kubeflow-roles/base
 - github.com/kubeflow/manifests/common/namespaces/base
+
+patchesStrategicMerge:
+- remove-cert-manager-ns-patch.yaml
