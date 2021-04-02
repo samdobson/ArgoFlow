@@ -21,3 +21,8 @@ resources:
 
 patchesStrategicMerge:
 - cluster-patch.yaml
+
+images:
+- name: rook/ceph
+  newName: rook/ceph
+  newTag: v1.5.9
