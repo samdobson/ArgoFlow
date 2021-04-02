@@ -17,6 +17,3 @@ images:
 - name: docker.io/istio/pilot
   newName: docker.io/istio/pilot
   newTag: 1.9.1
-- name: gcr.io/arrikto/kubeflow/oidc-authservice
-  newName: gcr.io/arrikto/kubeflow/oidc-authservice
-  newTag: 28c59ef
