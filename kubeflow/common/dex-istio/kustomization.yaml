@@ -3,7 +3,7 @@ kind: Kustomization
 namespace: auth
 
 resources:
-- github.com/kubeflow/manifests/common/dex/overlays/istio
+- github.com/davidspek/manifests/common/dex/overlays/istio?ref=dex-remove-base
 
 images:
 - name: quay.io/dexidp/dex
