@@ -17,3 +17,5 @@ resources:
 - argocd-applications/tensorboard-controller.yaml
 - argocd-applications/tensorboards-web-app.yaml
 - argocd-applications/volumes-web-app.yaml
+# non-kubeflow
+# - argocd-applications/rook-ceph.yaml
