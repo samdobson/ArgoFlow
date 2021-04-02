@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: kubeflow-roles-namespaces-gateway-authservice
+  name: kubeflow-roles-namespaces
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: https://github.com/kubeflow-onprem/ArgoFlow
     targetRevision: HEAD
-    path: kubeflow/common/roles-namespaces-gateway-authservice
+    path: kubeflow/common/roles-namespaces
   destination:
     server: https://kubernetes.default.svc
   syncPolicy:

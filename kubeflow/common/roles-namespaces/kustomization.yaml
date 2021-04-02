@@ -3,13 +3,10 @@ kind: Kustomization
 
 resources:
 - github.com/kubeflow/manifests/common/kubeflow-roles/base
-- github.com/kubeflow/manifests/common/namespaces/base
-- github.com/davidspek/manifests/common/istio/oidc-authservice/base?ref=fix-oidc-manifest
+- github.com/kubeflow/manifests/common/kubeflow-namespace/base
+# - github.com/davidspek/manifests/common/istio/oidc-authservice/base?ref=fix-oidc-manifest
 # - github.com/kubeflow/manifests/common/istio/istio/base
 # for HTTPS, create a certificate with name `istio-ingressgateway-certs`
 # in the `istio-system` namespace, comment out the previous line and
 # uncomment the following line
-- github.com/kubeflow/manifests/common/istio/istio/overlays/https-gateway
-
-patchesStrategicMerge:
-- remove-cert-manager-ns-patch.yaml
+# - github.com/kubeflow/manifests/common/istio/istio/overlays/https-gateway
