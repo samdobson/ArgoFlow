@@ -5,6 +5,9 @@ namespace: auth
 resources:
 - github.com/davidspek/manifests/common/dex/overlays/istio?ref=dex-remove-base
 
+patchesStrategicMerge:
+- configmap-patch.yaml
+
 images:
 - name: quay.io/dexidp/dex
   newName: quay.io/dexidp/dex

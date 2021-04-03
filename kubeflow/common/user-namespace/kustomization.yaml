@@ -3,4 +3,27 @@ kind: Kustomization
 namespace: kubeflow
 
 resources:
-- github.com/kubeflow/manifests/common/user-namespace/base
+- profile-instance.yaml
+configMapGenerator:
+- name: default-install-config
+  envs:
+  - params.env
+vars:
+# These vars are used for substituing in the parameters from the config map
+# into the Profiles custom resource.
+- name: user
+  objref:
+    kind: ConfigMap
+    name: default-install-config
+    apiVersion: v1
+  fieldref:
+    fieldpath: data.user
+- name: profile-name
+  objref:
+    kind: ConfigMap
+    name: default-install-config
+    apiVersion: v1
+  fieldref:
+    fieldpath: data.profile-name
+configurations:
+- params.yaml
