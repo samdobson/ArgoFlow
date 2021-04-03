@@ -21,6 +21,7 @@ resources:
 
 patchesStrategicMerge:
 - cluster-patch.yaml
+- set-default-storage.yaml
 
 images:
 - name: rook/ceph
