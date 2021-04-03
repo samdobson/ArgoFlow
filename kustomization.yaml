@@ -8,6 +8,7 @@ resources:
 - argocd-applications/istio.yaml
 - argocd-applications/oidc-authservice.yaml
 - argocd-applications/dex-istio.yaml
+- argocd-applications/knative.yaml
 - argocd-applications/profile-controller_access-management.yaml
 - argocd-applications/central-dashboard.yaml
 - argocd-applications/jupyter-web-app.yaml
