@@ -3,3 +3,23 @@ kind: Kustomization
 
 resources:
 - github.com/davidspek/katib/manifests/v1beta1/installs/katib-with-kubeflow-cert-manager?ref=fix-manifests
+
+patchesStrategicMerge:
+- https://raw.githubusercontent.com/kubeflow/katib/release-0.11/manifests/v1beta1/installs/katib-standalone/katib-config-patch.yaml
+
+images:
+- name: docker.io/kubeflowkatib/katib-controller
+  newName: docker.io/kubeflowkatib/katib-controller
+  newTag: v0.11.0
+- name: docker.io/kubeflowkatib/katib-db-manager
+  newName: docker.io/kubeflowkatib/katib-db-manager
+  newTag: v0.11.0
+- name: docker.io/kubeflowkatib/katib-ui
+  newName: docker.io/kubeflowkatib/katib-ui
+  newTag: v0.11.0
+- name: docker.io/kubeflowkatib/cert-generator
+  newName: docker.io/kubeflowkatib/cert-generator
+  newTag: v0.11.0
+- name: mysql
+  newName: mysql
+  newTag: "8"
