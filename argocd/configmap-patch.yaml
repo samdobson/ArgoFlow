@@ -11,8 +11,11 @@ data:
       ignoreDifferences: |
         jsonPointers:
         - /webhooks/0/clientConfig/caBundle
+        - /webhooks/1/clientConfig/caBundle
+        - /webhooks/2/clientConfig/caBundle
     admissionregistration.k8s.io/ValidatingWebhookConfiguration:
       ignoreDifferences: |
         jsonPointers:
         - /webhooks/0/clientConfig/caBundle
+        - /webhooks/1/clientConfig/caBundle
         - /webhooks/0/failurePolicy
