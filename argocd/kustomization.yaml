@@ -4,10 +4,11 @@ namespace: argocd
 
 resources:
 - namespace.yaml
-- github.com/argoproj/argo-cd/manifests/ha/cluster-install?ref=v2.0.0-rc2
+- github.com/argoproj/argo-cd/manifests/ha/cluster-install?ref=v2.0.0-rc3
 
 patchesStrategicMerge:
 - configmap-patch.yaml
+- add-custom-kustomize.yaml
 
 images:
 - name: ghcr.io/dexidp/dex
@@ -15,7 +16,7 @@ images:
   newTag: v2.27.0
 - name: quay.io/argoproj/argocd
   newName: quay.io/argoproj/argocd
-  newTag: release-2.0
+  newTag: v2.0.0-rc3
 - name: haproxy
   newName: haproxy
   newTag: 2.0.20-alpine
