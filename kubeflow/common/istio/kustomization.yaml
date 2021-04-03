@@ -14,6 +14,7 @@ resources:
 
 patchesStrategicMerge:
 - gateway-service.yaml
+- sidecar-configmap-patch.yaml
 
 images:
 - name: docker.io/istio/proxyv2
