@@ -11,8 +11,7 @@ resources:
 patchesStrategicMerge:
 - gateway-service.yaml
 - sidecar-configmap-patch.yaml
-# for HTTPS, create a certificate with name `istio-ingressgateway-certs`
-# in the `istio-system` namespace and uncomment the following line
+- ingress-certificate.yaml
 - https-gateway.yaml
 
 images:
