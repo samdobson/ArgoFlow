@@ -166,7 +166,7 @@ comment or uncomment the components you do or don't want.
 
 Next, commit your changes and push them to your repository.
 
-### Deploying Kubeflow with ArgoCD
+### Deploying Kubeflow
 
 Once you've commited and pushed your changes to your repository,
 you can either choose to deploy componenet individually or
@@ -191,3 +191,26 @@ If you would like to change something about your deployment,
 simply make the change, commit it and push it to your fork
 of this repo. ArgoCD will automatically detect the changes
 and update the necessary resources in your cluster.
+
+### Bonus: Extending the Volumes Web App with a File Browser
+
+A large problem for many people is how to easily upload or download data to and from the
+PVCs mounted as their workspace volumes for Notebook Servers. To make this easier
+a simple PVCViewer Controller was created (a slightly modified version of
+the tensorboard-controller). This feature was not ready in time for 1.3,
+and thus I am only documenting it here as an experimental feature as I believe
+many people would like to have this functionality.
+
+Here is an example of the PVC Viewer in action:
+
+![PVCViewer in action](./images/vwa-pvcviewer-demo.gif)
+
+To use the PVCViewer Controller, it must be deployed along with an updated version
+of the Volumes Web App. To do so, deploy
+[experimental-pvcviewer-controller.yaml](./argocd-applications/experimental-pvcviewer-controller.yaml) and
+[experimental-volumes-web-app.yaml](./argocd-application/experimental-volumes-web-app.yaml)
+instead of the regular Volumes Web App. If you are deploying Kubeflow with
+the [kubeflow.yaml](./kubeflow.yaml) file, you can edit the root
+[kustomization.yaml](./kustomization.yaml) and comment out the regular
+Volumes Web App and uncomment the PVCViewer Controller and Experimental
+Volumes Web App.
