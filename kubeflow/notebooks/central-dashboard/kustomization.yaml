@@ -4,6 +4,9 @@ kind: Kustomization
 resources:
 - github.com/kubeflow/kubeflow/components/centraldashboard/manifests/overlays/istio?ref=v1.3-branch
 
+patchesStrategicMerge:
+- enable-registration-flow.yaml
+
 images:
 - name: public.ecr.aws/j1r0q0g6/notebooks/central-dashboard
   newName: public.ecr.aws/j1r0q0g6/notebooks/central-dashboard
