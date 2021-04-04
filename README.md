@@ -199,7 +199,11 @@ PVCs mounted as their workspace volumes for Notebook Servers. To make this easie
 a simple PVCViewer Controller was created (a slightly modified version of
 the tensorboard-controller). This feature was not ready in time for 1.3,
 and thus I am only documenting it here as an experimental feature as I believe
-many people would like to have this functionality.
+many people would like to have this functionality. The images are grabbed from my
+personal dockerhub profile, but I can provide instructions for people that would
+like to build the images themselves. Also, it is important to note that
+the PVC Viewer will work with ReadWriteOnce PVCs, even when they are mounted
+to an active Notebook Server.
 
 Here is an example of the PVC Viewer in action:
 
