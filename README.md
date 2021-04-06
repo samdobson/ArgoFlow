@@ -9,11 +9,10 @@ run a script to change the ArgoCD application specs to point to their fork
 of this repository, and finally apply a master ArgoCD application that will
 deploy all other applications.
 
-This is a work in progress at this point.
 To run the below script [yq](https://github.com/mikefarah/yq) version 4
 must be installed
 
-Initial instructions:
+Overview of the steps:
 
 - fork this repo
 - modify the kustomizations for your purpose
@@ -51,6 +50,82 @@ Initial instructions:
 
 - [kustomization.yaml](./kustomization.yaml): Kustomization file that references the ArgoCD application files in [argocd-applications](./argocd-applications)
 - [kubeflow.yaml](./kubeflow.yaml): ArgoCD application that deploys the ArgoCD applications referenced in [kustomization.yaml](./kustomization.yaml)
+
+## Prerequisite
+
+- kubectl (latest)
+- kustomize 4.0.5
+- docker (if using kind)
+
+## Quick Start using kind
+
+### Install kind
+
+```bash
+curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.10.0/kind-linux-amd64
+chmod +x ./kind
+mv ./kind /<some-dir-in-your-PATH>/kind
+```
+
+### Deploy kind cluster
+
+Note - This will overwrite any existing ~/.kube/config file
+Please back up your current file if it already exists
+
+`kind create cluster --config kind/kind-cluster.yaml`
+
+```bash
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.3.6/components.yaml
+kubectl patch deployment metrics-server -n kube-system -p '{"spec":{"template":{"spec":{"containers":[{"name":"metrics-server","args":["--cert-dir=/tmp", "--secure-port=4443", "--kubelet-insecure-tls","--kubelet-preferred-address-types=InternalIP"]}]}}}}'
+```
+
+### Deploy MetalLB
+
+Edit the IP range in [configmap.yaml](./metallb/configmap.yaml) so that it is within
+the range of your docker network. To get your docker network range,
+run the following command:
+
+`docker network inspect -f '{{.IPAM.Config}}' kind`
+
+After updating the metallb configmap, deploy it by running:
+
+`kustomize build metallb/ | kubectl apply -f -`
+
+### Deploy Argo CD
+
+Deploy Argo CD with the following commaind:
+
+`kustomize build argocd/ | kubectl apply -f -`
+
+Expose Argo CD with a LoadBalancer to access the UI by executing:
+
+`kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'`
+
+Get the IP of the Argo CD endpoint:
+
+`kubectl get svc argocd-server -n argocd`
+
+Login with the username `admin` and the output of the following command as the password:
+
+`kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d`
+
+### Deploy kubeflow
+
+To deploy Kubeflow, execute the following command:
+
+`kubectl apply -f kubeflow.yaml`
+
+Note - This deploys all components of Kubeflow 1.3, it might take a while
+for everything to get started. Also, it is unknown what hardware specifications
+are needed for this at the current time, so your mileage may vary. Also,
+this deployment is using the manifests in this repository directly. For instructions
+how to customize the deployment and have Argo CD use those manifests see the next section.
+
+Get the IP of the Kubeflow gateway with the following command:
+
+`kubectl get svc istio-ingressgateway -n istio-system`
+
+Login to Kubeflow with "email-address" `user` and password `12341234`
 
 ## Installing ArgoCD
 
