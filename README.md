@@ -127,6 +127,10 @@ Get the IP of the Kubeflow gateway with the following command:
 
 Login to Kubeflow with "email-address" `user` and password `12341234`
 
+### Remove kind cluster
+
+Run: `kind delete cluster`
+
 ## Installing ArgoCD
 
 For this installation the HA version of ArgoCD is used.
