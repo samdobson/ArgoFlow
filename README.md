@@ -244,6 +244,13 @@ Simply run:
 ./setup_repo.sh <your_repo_fork_url>
 ```
 
+If you need to target a specific branch or release on your for you can add a second
+argument to the script to specify it.
+
+```bash
+./setup_repo.sh <your_repo_fork_url> <your_branch_or_release>
+```
+
 To change what Kubeflow or third-party componenets are included in the deployment,
 edit the [root kustomization.yaml](./kustomization.yaml) and
 comment or uncomment the components you do or don't want.
