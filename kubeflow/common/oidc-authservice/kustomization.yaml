@@ -2,7 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-- github.com/davidspek/manifests/common/istio/oidc-authservice/base?ref=fix-oidc-manifest
+- github.com/kubeflow/manifests/common/oidc-authservice/base
 
 images:
 - name: gcr.io/arrikto/kubeflow/oidc-authservice

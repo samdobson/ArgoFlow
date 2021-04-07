@@ -3,7 +3,7 @@ kind: Kustomization
 namespace: auth
 
 resources:
-- github.com/davidspek/manifests/common/dex/overlays/istio?ref=dex-remove-base
+- github.com/kubeflow/manifests/common/dex/overlays/istio
 
 patchesStrategicMerge:
 - configmap-patch.yaml
