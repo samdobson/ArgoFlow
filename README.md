@@ -160,6 +160,11 @@ using `kubectl port-forward svc/argocd-server -n argocd 8080:443`
 This UI will be handy to keep track of the created resources
 while deploying Kubeflow.
 
+Note - Argo CD needs to be able access your repository to deploy applications.
+ If the fork of this repository that you are planning to use with Argo CD is private
+ you will need to add credentials so it can access the repository. Please see
+ the instructions provided by Argo CD [here](https://argoproj.github.io/argo-cd/user-guide/private-repositories/).
+
 ## Installing Kubeflow
 
 The purpose of this repository is to make it easy for people to customize their Kubeflow
