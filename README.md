@@ -134,7 +134,7 @@ Run: `kind delete cluster`
 ## Installing ArgoCD
 
 For this installation the HA version of ArgoCD is used.
-Due to Pod Tolerations, 3 nodes will be required for this installation. 
+Due to Pod Tolerations, 3 nodes will be required for this installation.
 If you do not wish to use a HA installation of ArgoCD,
 edit this [kustomization.yaml](./argocd/kustomization.yaml) and remove `/ha`
 from the URI.
@@ -145,7 +145,7 @@ from the URI.
     kustomize build argocd/ | kubectl apply -f -
     ```
 
-2. Install the ArgoCD CLI tool from  https://github.com/argoproj/argo-cd/releases/latest
+2. Install the ArgoCD CLI tool from  [here](https://github.com/argoproj/argo-cd/releases/latest)
 3. Access the ArgoCD UI by exposing it through a LoadBalander, Ingress or by port-fowarding
 using `kubectl port-forward svc/argocd-server -n argocd 8080:443`
 4. Login to the ArgoCD CLI. First get the default password for the `admin` user:
@@ -183,7 +183,7 @@ To change these, edit the `user` and `profile-name`
 
 Next, in [configmap-path.yaml](./kubeflow/common/dex-istio/configmap-patch.yaml)
 under `staticPasswords`, change the `email`, the `hash` and the `username`
-for your used account. 
+for your used account.
 
 ```yaml
 staticPasswords:
@@ -193,7 +193,7 @@ staticPasswords:
 ```
 
 The `hash` is the bcrypt has of your password.
-You can generate this using https://passwordhashing.com/BCrypt,
+You can generate this using [this website](https://passwordhashing.com/BCrypt),
 or with the command below:
 
 ```bash
