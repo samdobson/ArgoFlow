@@ -3,13 +3,16 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:base",
-    "schedule:weekly",
+    //"schedule:daily",
     ":dependencyDashboard",
     ":semanticCommits",
     ":semanticCommitScope(deps)",
     "group:linters",
     "group:googleapis",
     "group:goOpenapi"
+  ],
+  "schedule": [
+    "before 11pm"
   ],
   "packageRules": [
     {
@@ -26,6 +29,14 @@
         "major"
       ],
       "enabled": true
+    },
+    {
+      "managers": ["kustomize"],
+      "pinDigests": true,
+      //"digest": {
+      //  "enabled": true,
+      //  "automerge": false
+      //}
     },
     {
       "datasources": ["go"],
@@ -50,15 +61,10 @@
   ],
   "dependencyDashboardApproval": false, // require approval for all updates initially
   "separateMinorPatch": true,
+  "prConcurrentLimit": 0,
+  "prHourlyLimit": 0,
   "kustomize": {
     "enabled": true,
-    "dependencyDashboardApproval": false,
-    "digest": {
-      "enabled": true,
-      "automerge": false
-    }
-  },
-  "docker": {
-    "pinDigests": true
+    "dependencyDashboardApproval": false
   }
 }
