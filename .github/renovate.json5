@@ -54,5 +54,14 @@
   "kustomize": {
     "enabled": true,
     "dependencyDashboardApproval": false
+  },
+  "regexManagers": [
+  {
+    "fileMatch": ["(^|/)kustomization.yaml$"],
+    "matchStrings": [
+        "- github\\.com\\/(?<depName>[^/]+?\\/[^/]*?)\\/.*\\?ref=(?<currentDigest>[a-f0-9]{40}) # tag=(?<currentValue>.*)"
+      ],
+    "datasourceTemplate": "github-tags"
   }
+]
 }
