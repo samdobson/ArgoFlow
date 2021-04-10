@@ -19,6 +19,15 @@
       "groupSlug": "docker-updates"
     },
     {
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "enabled": true
+    },
+    {
       "datasources": ["go"],
       "updateTypes": ["patch", "minor"],
       "groupName": "go.mod dependencies",
@@ -44,5 +53,12 @@
   "kustomize": {
     "enabled": true,
     "dependencyDashboardApproval": false,
+    "digest": {
+      "enabled": true,
+      "automerge": false
+    }
+  },
+  "docker": {
+    "pinDigests": true
   }
 }
