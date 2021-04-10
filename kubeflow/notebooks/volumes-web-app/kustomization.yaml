@@ -2,7 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-- github.com/kubeflow/kubeflow/components/crud-web-apps/volumes/manifests/overlays/istio?ref=v1.3.0-rc.0
+- github.com/kubeflow/kubeflow/components/crud-web-apps/volumes/manifests/overlays/istio?ref=50902c6b58218e3f823e744c76585b4bc9077b2a # tag=v1.3.0-rc.0
 
 images:
 - name: public.ecr.aws/j1r0q0g6/notebooks/volumes-web-app
