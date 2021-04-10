@@ -16,12 +16,6 @@
   ],
   "packageRules": [
     {
-      "datasources": ["docker"],
-      "updateTypes": ["patch"],
-      "groupName": "docker patch updates",
-      "groupSlug": "docker-updates"
-    },
-    {
       "matchDatasources": [
         "docker"
       ],
@@ -30,29 +24,23 @@
       ],
       "enabled": true
     },
+    //{
+    //  "matchDatasources": [
+    //    "docker"
+    //  ],
+    //  "enabled": true,
+    //  "pinDigests": true
+    //},
     {
-      "managers": ["kustomize"],
+      "matchDatasources": [
+        "github-releases",
+        "github-tags"
+      ],
       "pinDigests": true,
-      //"digest": {
-      //  "enabled": true,
-      //  "automerge": false
-      //}
+      "digest": {
+        "enabled": true,
+        "automerge": false
     },
-    {
-      "datasources": ["go"],
-      "updateTypes": ["patch", "minor"],
-      "groupName": "go.mod dependencies",
-      "groupSlug": "go-mod-updates"
-    },
-    {
-      "datasources": ["npm"],
-      "rangeStrategy": "update-lockfile",
-    },
-    {
-      "datasources": ["npm"],
-      "updateTypes": ["patch", "minor"],
-      "groupName": "npm dependencies",
-      "groupSlug": "npm-updates",
     },
     { // major updates do not create PRs automatically
       "updateTypes": ["major"],
