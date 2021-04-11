@@ -3,46 +3,57 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:base",
-    "schedule:weekly",
+    //"schedule:daily",
     ":dependencyDashboard",
-    ":semanticCommits",
-    ":semanticCommitScope(deps)",
-    "group:linters",
-    "group:googleapis",
-    "group:goOpenapi"
+    ":prHourlyLimitNone"
+  ],
+  "schedule": [
+    "before 11pm"
   ],
   "packageRules": [
     {
-      "datasources": ["docker"],
-      "updateTypes": ["patch"],
-      "groupName": "docker patch updates",
-      "groupSlug": "docker-updates"
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "enabled": true
     },
-    {
-      "datasources": ["go"],
-      "updateTypes": ["patch", "minor"],
-      "groupName": "go.mod dependencies",
-      "groupSlug": "go-mod-updates"
-    },
-    {
-      "datasources": ["npm"],
-      "rangeStrategy": "update-lockfile",
-    },
-    {
-      "datasources": ["npm"],
-      "updateTypes": ["patch", "minor"],
-      "groupName": "npm dependencies",
-      "groupSlug": "npm-updates",
-    },
+    //{
+    //  "matchDatasources": [
+    //    "docker"
+    //  ],
+    //  "enabled": true,
+    //  "pinDigests": true
+    //},
+    //{
+    //  "matchDatasources": [
+    //    "github-releases",
+    //    "github-tags"
+    //  ],
+    //  "pinDigests": true,
+    //  "digest": {
+    //    "enabled": true,
+    //    "automerge": false
+    //},
+    //},
     { // major updates do not create PRs automatically
       "updateTypes": ["major"],
       "dependencyDashboardApproval": true,
     }
   ],
-  "dependencyDashboardApproval": false, // require approval for all updates initially
   "separateMinorPatch": true,
   "kustomize": {
     "enabled": true,
-    "dependencyDashboardApproval": false,
-  }
+  },
+  "regexManagers": [
+    {
+      "fileMatch": ["(^|/)kustomization.yaml$"],
+      "matchStrings": [
+          "- github\\.com\\/(?<depName>[^/]+?\\/[^/]*?)\\/.*\\?ref=(?<currentDigest>[a-f0-9]{40}) # tag=(?<currentValue>.*)"
+        ],
+      "datasourceTemplate": "github-tags"
+    }
+  ]
 }

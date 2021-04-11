@@ -5,7 +5,7 @@ resources:
 - github.com/kubeflow/manifests/common/knative/knative-serving-crds/base
 - github.com/kubeflow/manifests/common/knative/knative-serving-install/base
 - github.com/kubeflow/manifests/common/knative/knative-eventing-crds/base
-- github.com/davidspek/manifests/common/knative/knative-eventing-install/base?ref=knative-eventing-fix
+- github.com/kubeflow/manifests/common/knative/knative-eventing-install/base
 
 images:
 - name: gcr.io/knative-releases/knative.dev/eventing/cmd/controller

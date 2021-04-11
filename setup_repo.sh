@@ -13,3 +13,13 @@ if [ -z "$1" ]
             yq e -i ".spec.source.repoURL = \"$1\"" $filename
         done
 fi
+
+if [ -z "$2" ]
+    then
+        echo "no target branch provided, using HEAD"
+    else
+        yq e -i ".spec.source.targetRevision = \"$2\"" kubeflow.yaml
+        for filename in ./argocd-applications/*.yaml; do
+            yq e -i ".spec.source.targetRevision = \"$2\"" $filename
+        done
+fi

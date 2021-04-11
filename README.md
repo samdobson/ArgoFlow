@@ -9,11 +9,10 @@ run a script to change the ArgoCD application specs to point to their fork
 of this repository, and finally apply a master ArgoCD application that will
 deploy all other applications.
 
-This is a work in progress at this point.
 To run the below script [yq](https://github.com/mikefarah/yq) version 4
 must be installed
 
-Initial instructions:
+Overview of the steps:
 
 - fork this repo
 - modify the kustomizations for your purpose
@@ -52,10 +51,107 @@ Initial instructions:
 - [kustomization.yaml](./kustomization.yaml): Kustomization file that references the ArgoCD application files in [argocd-applications](./argocd-applications)
 - [kubeflow.yaml](./kubeflow.yaml): ArgoCD application that deploys the ArgoCD applications referenced in [kustomization.yaml](./kustomization.yaml)
 
+## Prerequisite
+
+- kubectl (latest)
+- kustomize 4.0.5
+- docker (if using kind)
+
+## Quick Start using kind
+
+### Install kind
+
+On linux:
+
+```bash
+curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.10.0/kind-linux-amd64
+chmod +x ./kind
+mv ./kind /<some-dir-in-your-PATH>/kind
+```
+
+On Mac:
+
+```bash
+curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.10.0/kind-darwin-amd64
+chmod +x ./kind
+mv ./kind /<some-dir-in-your-PATH>/kind
+```
+
+On Windows:
+
+```cmd
+curl.exe -Lo kind-windows-amd64.exe https://kind.sigs.k8s.io/dl/v0.10.0/kind-windows-amd64
+Move-Item .\kind-windows-amd64.exe c:\some-dir-in-your-PATH\kind.exe
+```
+
+### Deploy kind cluster
+
+Note - This will overwrite any existing ~/.kube/config file
+Please back up your current file if it already exists
+
+`kind create cluster --config kind/kind-cluster.yaml`
+
+```bash
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.3.6/components.yaml
+kubectl patch deployment metrics-server -n kube-system -p '{"spec":{"template":{"spec":{"containers":[{"name":"metrics-server","args":["--cert-dir=/tmp", "--secure-port=4443", "--kubelet-insecure-tls","--kubelet-preferred-address-types=InternalIP"]}]}}}}'
+```
+
+### Deploy MetalLB
+
+Edit the IP range in [configmap.yaml](./metallb/configmap.yaml) so that it is within
+the range of your docker network. To get your docker network range,
+run the following command:
+
+`docker network inspect -f '{{.IPAM.Config}}' kind`
+
+After updating the metallb configmap, deploy it by running:
+
+`kustomize build metallb/ | kubectl apply -f -`
+
+### Deploy Argo CD
+
+Deploy Argo CD with the following commaind:
+
+`kustomize build argocd/ | kubectl apply -f -`
+
+Expose Argo CD with a LoadBalancer to access the UI by executing:
+
+`kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'`
+
+Get the IP of the Argo CD endpoint:
+
+`kubectl get svc argocd-server -n argocd`
+
+Login with the username `admin` and the output of the following command as the password:
+
+`kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d`
+
+### Deploy kubeflow
+
+To deploy Kubeflow, execute the following command:
+
+`kubectl apply -f kubeflow.yaml`
+
+Note - This deploys all components of Kubeflow 1.3, it might take a while
+for everything to get started. Also, it is unknown what hardware specifications
+are needed for this at the current time, so your mileage may vary. Also,
+this deployment is using the manifests in this repository directly. For instructions
+how to customize the deployment and have Argo CD use those manifests see the next section.
+
+Get the IP of the Kubeflow gateway with the following command:
+
+`kubectl get svc istio-ingressgateway -n istio-system`
+
+Login to Kubeflow with "email-address" `user` and password `12341234`
+
+### Remove kind cluster
+
+Run: `kind delete cluster`
+
 ## Installing ArgoCD
 
 For this installation the HA version of ArgoCD is used.
-Due to Pod Tolerations, 3 nodes will be required for this installation. 
+Due to Pod Tolerations, 3 nodes will be required for this installation.
 If you do not wish to use a HA installation of ArgoCD,
 edit this [kustomization.yaml](./argocd/kustomization.yaml) and remove `/ha`
 from the URI.
@@ -66,7 +162,7 @@ from the URI.
     kustomize build argocd/ | kubectl apply -f -
     ```
 
-2. Install the ArgoCD CLI tool from  https://github.com/argoproj/argo-cd/releases/latest
+2. Install the ArgoCD CLI tool from  [here](https://github.com/argoproj/argo-cd/releases/latest)
 3. Access the ArgoCD UI by exposing it through a LoadBalander, Ingress or by port-fowarding
 using `kubectl port-forward svc/argocd-server -n argocd 8080:443`
 4. Login to the ArgoCD CLI. First get the default password for the `admin` user:
@@ -80,6 +176,11 @@ using `kubectl port-forward svc/argocd-server -n argocd 8080:443`
 5. You can now login to the ArgoCD UI with your new password.
 This UI will be handy to keep track of the created resources
 while deploying Kubeflow.
+
+Note - Argo CD needs to be able access your repository to deploy applications.
+ If the fork of this repository that you are planning to use with Argo CD is private
+ you will need to add credentials so it can access the repository. Please see
+ the instructions provided by Argo CD [here](https://argoproj.github.io/argo-cd/user-guide/private-repositories/).
 
 ## Installing Kubeflow
 
@@ -99,7 +200,7 @@ To change these, edit the `user` and `profile-name`
 
 Next, in [configmap-path.yaml](./kubeflow/common/dex-istio/configmap-patch.yaml)
 under `staticPasswords`, change the `email`, the `hash` and the `username`
-for your used account. 
+for your used account.
 
 ```yaml
 staticPasswords:
@@ -109,7 +210,7 @@ staticPasswords:
 ```
 
 The `hash` is the bcrypt has of your password.
-You can generate this using https://passwordhashing.com/BCrypt,
+You can generate this using [this website](https://passwordhashing.com/BCrypt),
 or with the command below:
 
 ```bash
@@ -158,6 +259,13 @@ Simply run:
 
 ```bash
 ./setup_repo.sh <your_repo_fork_url>
+```
+
+If you need to target a specific branch or release on your for you can add a second
+argument to the script to specify it.
+
+```bash
+./setup_repo.sh <your_repo_fork_url> <your_branch_or_release>
 ```
 
 To change what Kubeflow or third-party componenets are included in the deployment,
