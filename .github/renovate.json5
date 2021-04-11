@@ -5,11 +5,7 @@
     "config:base",
     //"schedule:daily",
     ":dependencyDashboard",
-    ":semanticCommits",
-    ":semanticCommitScope(deps)",
-    "group:linters",
-    "group:googleapis",
-    "group:goOpenapi"
+    ":prHourlyLimitNone"
   ],
   "schedule": [
     "before 11pm"
@@ -24,44 +20,40 @@
       ],
       "enabled": true
     },
-    {
-      "matchDatasources": [
-        "docker"
-      ],
-      "enabled": true,
-      "pinDigests": true
-    },
-    {
-      "matchDatasources": [
-        "github-releases",
-        "github-tags"
-      ],
-      "pinDigests": true,
-      "digest": {
-        "enabled": true,
-        "automerge": false
-    },
-    },
+    //{
+    //  "matchDatasources": [
+    //    "docker"
+    //  ],
+    //  "enabled": true,
+    //  "pinDigests": true
+    //},
+    //{
+    //  "matchDatasources": [
+    //    "github-releases",
+    //    "github-tags"
+    //  ],
+    //  "pinDigests": true,
+    //  "digest": {
+    //    "enabled": true,
+    //    "automerge": false
+    //},
+    //},
     { // major updates do not create PRs automatically
       "updateTypes": ["major"],
       "dependencyDashboardApproval": true,
     }
   ],
-  "dependencyDashboardApproval": false, // require approval for all updates initially
   "separateMinorPatch": true,
-  "prConcurrentLimit": 0,
-  "prHourlyLimit": 0,
   "kustomize": {
     "enabled": true,
-    "dependencyDashboardApproval": false
   },
   "regexManagers": [
-  {
-    "fileMatch": ["(^|/)kustomization.yaml$"],
-    "matchStrings": [
-        "- github\\.com\\/(?<depName>[^/]+?\\/[^/]*?)\\/.*\\?ref=(?<currentDigest>[a-f0-9]{40}) # tag=(?<currentValue>.*)"
-      ],
-    "datasourceTemplate": "github-tags"
-  }
-]
+    {
+      "fileMatch": ["(^|/)kustomization.yaml$"],
+      "matchStrings": [
+          "- github\\.com\\/(?<depName>[^/]+?\\/[^/]*?)\\/.*\\?ref=(?<currentDigest>[a-f0-9]{40}) # tag=(?<currentValue>.*)"
+        ],
+      "datasourceTemplate": "github-tags"
+    }
+  ]
 }

@@ -10,7 +10,7 @@ images:
   newTag: 1.5.0-rc.2@sha256:a13d49a4bee754f221697957d8491469bf2f958bbaac3d09707f053c8a4adf83
 - name: gcr.io/ml-pipeline/cache-server
   newName: gcr.io/ml-pipeline/cache-server
-  newTag: 1.5.0-rc.2sha256:6734f3c7b0a0d868cd80b9299d386f902a44b2e4fc1d1c74bc6b621409fb734d
+  newTag: 1.5.0-rc.2@sha256:6734f3c7b0a0d868cd80b9299d386f902a44b2e4fc1d1c74bc6b621409fb734d
 - name: gcr.io/ml-pipeline/metadata-envoy
   newName: gcr.io/ml-pipeline/metadata-envoy
   newTag: 1.5.0-rc.2@sha256:8e668c8165ef0b70efb818c6789b4e437a975e13d258ea2c1bbf335be9a2aae1
