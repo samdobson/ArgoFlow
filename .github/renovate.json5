@@ -24,13 +24,13 @@
       ],
       "enabled": true
     },
-    //{
-    //  "matchDatasources": [
-    //    "docker"
-    //  ],
-    //  "enabled": true,
-    //  "pinDigests": true
-    //},
+    {
+      "matchDatasources": [
+        "docker"
+      ],
+      "enabled": true,
+      "pinDigests": true
+    },
     {
       "matchDatasources": [
         "github-releases",
