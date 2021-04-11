@@ -2,7 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-- github.com/kubeflow/kfserving/config/overlays/kubeflow?ref=aa1042a3b6f72a65f16e13771ce335b1844ad7fc # tag=v0.5.1
+- github.com/kubeflow/kfserving/config/overlays/kubeflow?ref=release-0.5
 
 images:
 - name: gcr.io/kfserving/kfserving-controller
